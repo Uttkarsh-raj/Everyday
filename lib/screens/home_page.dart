@@ -1,3 +1,4 @@
+import 'package:everyday/screens/qr_scanner.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -9,8 +10,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String dropDownValue = 'None';
-  TextEditingController _amountcontroller = TextEditingController();
-  TextEditingController _typecontroller = TextEditingController();
+  final TextEditingController _amountcontroller = TextEditingController();
+  final TextEditingController _typecontroller = TextEditingController();
   List<String> options = ['None', 'Food', 'House/Rent', 'Clothes', 'Others'];
 
   void _addExpense() {
@@ -46,7 +47,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           MaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const QrScan(),
+              ));
+            },
             child: const Text(
               'Scan',
               style: TextStyle(fontSize: 18),
@@ -60,16 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-          ],
-        ),
-      ),
+      body: const Center(),
       floatingActionButton: FloatingActionButton(
         onPressed: _addExpense,
         tooltip: 'New',
