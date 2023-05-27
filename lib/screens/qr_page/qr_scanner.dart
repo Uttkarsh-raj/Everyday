@@ -27,6 +27,7 @@ class _QrScanState extends State<QrScan> {
   @override
   void dispose() {
     controller?.dispose();
+    barcode = null;
     super.dispose();
   }
 
@@ -94,6 +95,7 @@ class _QrScanState extends State<QrScan> {
     if (barcode != null) {
       controller!.pauseCamera();
     }
+    controller!.resumeCamera();
     return Text(
       barcode != null ? '${barcode!.code}' : 'Scan a code!',
       maxLines: 3,
@@ -128,15 +130,6 @@ class _QrScanState extends State<QrScan> {
 
   void launcherUrl() async {
     var url = '${barcode!.code}';
-
-    var index = url.indexOf('am=');
-    String firstPart = url.substring(0, index + 2);
-    String lastPart = url.substring(index + 2, url.length);
-    var newUrl = firstPart + widget.amount + "ac" + lastPart;
-    url = newUrl;
-    print(widget.amount);
-    print('New URL IS : ' + newUrl);
-
     if (await launchUrl(Uri.parse(url))) {
       await canLaunchUrl(Uri.parse(url));
     } else {

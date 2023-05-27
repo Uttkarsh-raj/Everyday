@@ -56,13 +56,13 @@ class BarGraph extends StatelessWidget {
                 barRods: [
                   BarChartRodData(
                     toY: data.y,
-                    color: Colors.deepPurple[800],
+                    color: Colors.deepPurple[600],
                     width: 20,
                     borderRadius: BorderRadius.circular(8),
                     backDrawRodData: BackgroundBarChartRodData(
                       show: true,
                       toY: maxY,
-                      color: const Color.fromARGB(255, 248, 229, 251),
+                      color: const Color(0xffbb86fc).withOpacity(0.2),
                     ),
                   )
                 ],
@@ -75,36 +75,36 @@ class BarGraph extends StatelessWidget {
 }
 
 Widget getBottomTitles(double value, TitleMeta meta) {
-  var style = TextStyle(
-    color: Colors.purple[400],
+  const style = TextStyle(
+    color: Color(0xffbb86fc),
     fontWeight: FontWeight.bold,
     fontSize: 12,
   );
   Widget text;
   switch (value.toInt()) {
     case 0:
-      text = Text('Sun', style: style);
+      text = const Text('Sun', style: style);
       break;
     case 1:
-      text = Text('Mon', style: style);
+      text = const Text('Mon', style: style);
       break;
     case 2:
-      text = Text('Tue', style: style);
+      text = const Text('Tue', style: style);
       break;
     case 3:
-      text = Text('Wed', style: style);
+      text = const Text('Wed', style: style);
       break;
     case 4:
-      text = Text('Thu', style: style);
+      text = const Text('Thu', style: style);
       break;
     case 5:
-      text = Text('Fri', style: style);
+      text = const Text('Fri', style: style);
       break;
     case 6:
-      text = Text('Sat', style: style);
+      text = const Text('Sat', style: style);
       break;
     default:
-      text = Text('', style: style);
+      text = const Text('', style: style);
       break;
   }
   return SideTitleWidget(child: text, axisSide: meta.axisSide);

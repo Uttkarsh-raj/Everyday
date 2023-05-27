@@ -14,12 +14,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String dropDownValue = 'None';
+  String dropDownValue = 'Food';
   String dropDownValueIcon = 'assets/images/question.png';
   final TextEditingController _amountcontroller = TextEditingController();
-  List<String> options = ['None', 'Food', 'House/Rent', 'Clothes', 'Others'];
+  final TextEditingController _othercontroller = TextEditingController();
+  List<String> options = ['Food', 'House/Rent', 'Clothes', 'Others'];
   List<String> icon = [
-    'assets/images/question.png',
     'assets/images/fast-food.png',
     'assets/images/home.png',
     'assets/images/costume-clothes.png',
@@ -29,6 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     _amountcontroller.dispose();
+    _othercontroller.dispose();
     super.dispose();
   }
 
@@ -44,8 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void clear() {
     _amountcontroller.clear();
-    dropDownValue = 'None';
-    dropDownValueIcon = 'assets/images/question.png';
+    _othercontroller.clear();
+    dropDownValue = 'Food';
+    dropDownValueIcon = 'assets/images/fast-food.png';
   }
 
   void addExpense() {
@@ -106,6 +108,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
+              if (dropDownValue == 'Others')
+                TextField(
+                  controller: _othercontroller,
+                  keyboardType: TextInputType.name,
+                  decoration: const InputDecoration(
+                    hintText: 'Others',
+                  ),
+                ),
             ],
           ),
           actions: [
@@ -121,14 +131,17 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             MaterialButton(
               onPressed: () {
-                save(dropDownValue, dropDownValueIcon);
+                if (dropDownValue == 'Others') {
+                  save(_othercontroller.text, dropDownValueIcon);
+                } else {
+                  save(dropDownValue, dropDownValueIcon);
+                }
                 Navigator.of(context).pop();
-
-                // Navigator.of(context).push(MaterialPageRoute(
-                //   builder: (context) => QrScan(
-                //     amount: _amountcontroller.text.toString(),
-                //   ),
-                // ));
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => QrScan(
+                    amount: _amountcontroller.text.toString(),
+                  ),
+                ));
                 clear();
               },
               child: const Text(
@@ -157,18 +170,54 @@ class _MyHomePageState extends State<MyHomePage> {
             child: ListView(
               children: [
                 ExpenseSummary(startOfWeek: value.startOfWeekData()),
-                const SizedBox(height: 10),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: value.getAll().length,
-                  itemBuilder: (context, index) => ExpenseTile(
-                    category: value.getAll()[index].category,
-                    date: value.getAll()[index].dateAndTime,
-                    amount: value.getAll()[index].amount,
-                    icon: value.getAll()[index].icon,
+                const SizedBox(height: 27),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: Text(
+                    'Today\'s Expenses : ',
+                    style: TextStyle(
+                      color: Colors.deepPurple,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
+                if (value.getAll().isNotEmpty)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: value.getAll().length,
+                    itemBuilder: (context, index) => ExpenseTile(
+                      category: value.getAll()[index].category,
+                      date: value.getAll()[index].dateAndTime,
+                      amount: value.getAll()[index].amount,
+                      icon: value.getAll()[index].icon,
+                    ),
+                  ),
+                if (value.getAll().isEmpty)
+                  ListTile(
+                    leading: Icon(
+                      Icons.currency_exchange_outlined,
+                      color: Colors.deepPurple[300],
+                      size: 30,
+                    ),
+                    title: Text(
+                      'No expenses today!',
+                      style: TextStyle(
+                        color: Colors.deepPurple[300],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                    subtitle: Text(
+                      'Looks like your wallet is on a vacation too.',
+                      style: TextStyle(
+                        color: Colors.deepPurple[300],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                  )
               ],
             ),
           ),
