@@ -1,6 +1,6 @@
 import 'package:everyday/models/expense_item.dart';
 import 'package:everyday/provider/expense_data.dart';
-import 'package:everyday/screens/bar_graph/espense_summary.dart';
+import 'package:everyday/screens/bar_graph/expense_summary.dart';
 import 'package:everyday/screens/home_page/components/list_tile.dart';
 import 'package:everyday/screens/qr_page/qr_scanner.dart';
 import 'package:flutter/material.dart';
@@ -157,6 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: ListView(
               children: [
                 ExpenseSummary(startOfWeek: value.startOfWeekData()),
+                const SizedBox(height: 10),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
