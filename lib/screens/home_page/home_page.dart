@@ -1,5 +1,6 @@
 import 'package:everyday/models/expense_item.dart';
 import 'package:everyday/provider/expense_data.dart';
+import 'package:everyday/screens/bar_graph/espense_summary.dart';
 import 'package:everyday/screens/home_page/components/list_tile.dart';
 import 'package:everyday/screens/qr_page/qr_scanner.dart';
 import 'package:flutter/material.dart';
@@ -150,19 +151,27 @@ class _MyHomePageState extends State<MyHomePage> {
           tooltip: 'New',
           child: const Icon(Icons.add_outlined),
         ),
-        body: ListView(children: [
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: value.getAll().length,
-            itemBuilder: (context, index) => ExpenseTile(
-              category: value.getAll()[index].category,
-              date: value.getAll()[index].dateAndTime,
-              amount: value.getAll()[index].amount,
-              icon: value.getAll()[index].icon,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: ListView(
+              children: [
+                ExpenseSummary(startOfWeek: value.startOfWeekData()),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: value.getAll().length,
+                  itemBuilder: (context, index) => ExpenseTile(
+                    category: value.getAll()[index].category,
+                    date: value.getAll()[index].dateAndTime,
+                    amount: value.getAll()[index].amount,
+                    icon: value.getAll()[index].icon,
+                  ),
+                ),
+              ],
             ),
           ),
-        ]),
+        ),
       ),
     );
   }

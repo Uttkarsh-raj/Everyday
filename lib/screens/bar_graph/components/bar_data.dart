@@ -1,4 +1,4 @@
-import 'package:everyday/screens/bar_graph/individual_bar.dart';
+import 'package:everyday/screens/bar_graph/components/individual_bar.dart';
 
 class BarData {
   final double sunAmount;

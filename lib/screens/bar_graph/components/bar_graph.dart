@@ -1,4 +1,4 @@
-import 'package:everyday/screens/bar_graph/bar_data.dart';
+import 'package:everyday/screens/bar_graph/components/bar_data.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
