@@ -14,7 +14,9 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _typecontroller = TextEditingController();
   List<String> options = ['None', 'Food', 'House/Rent', 'Clothes', 'Others'];
 
-  void _addExpense() {
+  void save() {}
+
+  void addExpense() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -49,7 +51,9 @@ class _MyHomePageState extends State<MyHomePage> {
           MaterialButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const QrScan(),
+                builder: (context) => QrScan(
+                  amount: _amountcontroller.text.toString(),
+                ),
               ));
             },
             child: const Text(
@@ -67,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: const Center(),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addExpense,
+        onPressed: addExpense,
         tooltip: 'New',
         child: const Icon(Icons.add_outlined),
       ),

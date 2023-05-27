@@ -8,7 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'home_page.dart';
 
 class QrScan extends StatefulWidget {
-  const QrScan({super.key});
+  const QrScan({super.key, required this.amount});
+  final String amount;
   @override
   State<QrScan> createState() => _QrScanState();
 }
@@ -127,8 +128,17 @@ class _QrScanState extends State<QrScan> {
 
   void launcherUrl() async {
     var url = '${barcode!.code}';
-    if (await launch(url)) {
-      await canLaunch(url);
+
+    var index = url.indexOf('am=');
+    String firstPart = url.substring(0, index + 2);
+    String lastPart = url.substring(index + 2, url.length);
+    var newUrl = firstPart + widget.amount + "ac" + lastPart;
+    url = newUrl;
+    print(widget.amount);
+    print('New URL IS : ' + newUrl);
+
+    if (await launchUrl(Uri.parse(url))) {
+      await canLaunchUrl(Uri.parse(url));
     } else {
       throw 'Could not launch $url';
     }
