@@ -5,7 +5,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-import 'home_page.dart';
+import '../home_page/home_page.dart';
 
 class QrScan extends StatefulWidget {
   const QrScan({super.key, required this.amount});
