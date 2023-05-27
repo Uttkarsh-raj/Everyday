@@ -122,12 +122,13 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 save(dropDownValue, dropDownValueIcon);
                 Navigator.of(context).pop();
-                clear();
+
                 // Navigator.of(context).push(MaterialPageRoute(
                 //   builder: (context) => QrScan(
                 //     amount: _amountcontroller.text.toString(),
                 //   ),
                 // ));
+                clear();
               },
               child: const Text(
                 'Scan',
@@ -149,8 +150,10 @@ class _MyHomePageState extends State<MyHomePage> {
           tooltip: 'New',
           child: const Icon(Icons.add_outlined),
         ),
-        body: Center(
-          child: ListView.builder(
+        body: ListView(children: [
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: value.getAll().length,
             itemBuilder: (context, index) => ExpenseTile(
               category: value.getAll()[index].category,
@@ -159,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: value.getAll()[index].icon,
             ),
           ),
-        ),
+        ]),
       ),
     );
   }
