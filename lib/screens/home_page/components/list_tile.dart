@@ -34,7 +34,7 @@ class ExpenseTile extends StatelessWidget {
         style: style.copyWith(fontSize: 13),
       ),
       trailing: Text(
-        '\₹' + amount,
+        '₹$amount',
         style: style.copyWith(color: Colors.deepPurple[400]),
       ),
     );

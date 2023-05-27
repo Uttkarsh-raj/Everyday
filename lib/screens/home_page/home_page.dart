@@ -15,7 +15,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String dropDownValue = 'Food';
-  String dropDownValueIcon = 'assets/images/question.png';
+  String dropDownValueIcon = 'assets/images/fast-food.png';
   final TextEditingController _amountcontroller = TextEditingController();
   final TextEditingController _othercontroller = TextEditingController();
   List<String> options = ['Food', 'House/Rent', 'Clothes', 'Others'];
@@ -25,6 +25,12 @@ class _MyHomePageState extends State<MyHomePage> {
     'assets/images/costume-clothes.png',
     'assets/images/box.png'
   ];
+
+  @override
+  void initState() {
+    Provider.of<ExpenseData>(context, listen: false).prepareData();
+    super.initState();
+  }
 
   @override
   void dispose() {

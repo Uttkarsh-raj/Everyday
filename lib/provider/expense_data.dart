@@ -1,3 +1,4 @@
+import 'package:everyday/database/hive_database.dart';
 import 'package:everyday/models/expense_item.dart';
 import 'package:everyday/utils/date_time_helper.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +10,24 @@ class ExpenseData extends ChangeNotifier {
     return overallExpense;
   }
 
+  final db = HiveDatabase();
+
+  void prepareData() {
+    if (db.readData().isNotEmpty) {
+      overallExpense = db.readData();
+    }
+  }
+
   void addNewExpense(ExpenseItem newExpense) {
     overallExpense.add(newExpense);
     notifyListeners();
+    db.saveData(overallExpense);
   }
 
   void deleteExpense(ExpenseItem expense) {
     overallExpense.remove(expense);
     notifyListeners();
+    db.saveData(overallExpense);
   }
 
   String getDayByName(DateTime dateTime) {

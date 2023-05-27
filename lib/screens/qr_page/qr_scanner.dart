@@ -27,7 +27,6 @@ class _QrScanState extends State<QrScan> {
   @override
   void dispose() {
     controller?.dispose();
-    barcode = null;
     super.dispose();
   }
 
@@ -92,10 +91,13 @@ class _QrScanState extends State<QrScan> {
   }
 
   Widget buildResult() {
-    if (barcode != null) {
-      controller!.pauseCamera();
-    }
-    controller!.resumeCamera();
+    try {
+      if (barcode!.code!.isNotEmpty) {
+        controller?.pauseCamera();
+        const Duration(seconds: 5);
+      }
+      controller?.resumeCamera();
+    } catch (e) {}
     return Text(
       barcode != null ? '${barcode!.code}' : 'Scan a code!',
       maxLines: 3,
